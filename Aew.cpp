@@ -4,6 +4,23 @@
 #include <vector>
 #include <ctime>
 using namespace std;
+struct roomtype{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับห้อง
+    string type[3];
+    int roomnumber[24];
+    int price[3];
+    char status[24];
+    int bookingNO[24];
+};
+
+struct guestinfo{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับลูกค้า
+    string name[24];
+    string email[24];
+    int phonenumber[24];
+    string checkindate[24];
+    string checkoutdate[24];
+    roomtype *roomdata;
+};
+
 
 void roomsetup(roomtype &room){
     int para1=1,para2=1;
@@ -57,22 +74,6 @@ void Showinfo(const guestinfo info,const roomtype room,int loc){
     cout<<"-------------------------------------------------------------\n";
 }
 
-struct roomtype{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับห้อง
-    string type[3];
-    int roomnumber[24];
-    int price[3];
-    char status[24];
-    int bookingNO[24];
-};
-
-struct guestinfo{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับลูกค้า
-    string name[24];
-    string email[24];
-    int phonenumber[24];
-    string checkindate[24];
-    string checkoutdate[24];
-    roomtype *roomdata;
-};
 
 int checkuser(){ //ฟังก์ชันแรกรับอินพุตเพื่อแยกลูกค้ากับหนักงาน
     char menu;
