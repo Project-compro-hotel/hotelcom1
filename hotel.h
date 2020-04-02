@@ -3,7 +3,9 @@
 #include <cstdlib>
 #include <vector>
 #include <ctime>
+#include <cctype>
 using namespace std;
+
 struct roomtype{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับห้อง
     string type[3];
     int roomnumber[24];
@@ -78,6 +80,7 @@ int checkuser(){ //ฟังก์ชันแรกรับอินพุต�
     cout << "\n---------------------------------";
     cout << "\nGuest[G] or Receptionist[R] : ";
     cin >> menu;
+    menu=toupper(menu);
     if(menu=='G') return 1;
     else return 0;
 }
@@ -89,6 +92,7 @@ int guestpart(){ //ฟังก์ชันต่อจาก checkuser เป�
     cout << "\n---------------------------------";
     cout << "\nManage your booking[M] or Make a booking[B] : "; //ให้เลือกระหว่างเช็คสถานะการจอง,ห้อง กับ จองห้อง
     cin >> menu;
+    menu=toupper(menu);
     if(menu=='M') return 1;
     else return 0;
 }
@@ -231,7 +235,6 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
 	else if(M>=3){
 		totalprice=totalprice+200;
 	}
-	srand(time(0));
 	int C = rand()%10;
 	cout<<"\nRandom Lucky Number : " << C;
 	if(C==3){
@@ -272,6 +275,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
     cout << "\nConfirm booking information";
     cout << "\nYES[Y] or NO[N] : ";
     cin >> confirm;
+    confirm=toupper(confirm);
     if(confirm=='Y'){
         bookingNum=rand()%89999+10000;
         for(int j=0;j<roomNO;j++){
@@ -315,6 +319,7 @@ void searchforRecep(const guestinfo info, const roomtype room){//ฟังก์
     cout << "\nSearching by name[N], room number[R] or check-in date[C]";
     cout << "\nPlease select and option : ";
     cin >> cmd;
+    cmd=toupper(cmd);
     cout << "---------------------------------";
     if(cmd=='N'){
         cout << "\nPlease input a name : ";
@@ -371,6 +376,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     cout << "\nCheck available room";
     cout << "\nRoom type[T] or Floor[F] : ";//ให้เลือกว่าจะหาจากอะไร มีประเภทห้อง กับ ชั้น
     cin >> checkA;
+    checkA=toupper(checkA);
 
     if(checkA != 'T' && checkA != 'F')//ใส่ค่าไม่ถูกต้อง
     {
@@ -378,6 +384,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         cout << "\nPlease input again!!";
         cout << "\nStandard[S] , Twin bed[T] , Deluxe[D] : ";
         cin >> checkAt;
+        checkAt=toupper(checkAt);
     }
 
     if(checkA == 'T')//หาจากประเภทห้อง
@@ -386,7 +393,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         cout << "\nPlease select room type ";
         cout << "\nStandard[S] , Twin bed[T] , Deluxe[D] : ";
         cin >> checkAt;
-
+        checkAt=toupper(checkAt);
         cout << "---------------------------------";
         cout << "\nAvailable room : ";
         if (checkAt == 'S') {
@@ -457,7 +464,8 @@ void recepFunc(const roomtype room,const guestinfo info)
     cout << "\nCheck available room[A] or Check checkin and checkout date[D] or Search information[S] : ";
     cin >> menuR;
     cout << "---------------------------------";
-
+    menuR=toupper(menuR);
+    
     while(menuR != 'A' && menuR != 'D' && menuR != 'R')
     {
         cout << "Please input again : ";
