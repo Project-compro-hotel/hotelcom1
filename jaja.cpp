@@ -99,8 +99,8 @@ void check_checkin(const roomtype room,const guestinfo guest)//เช็คห�
     {
         if(room.roomnumber[i] == num_check)
         {
-            cout << "Checkin : " << guest.checkindate;
-            cout << "\nCheckout : " << guest.checkoutdate;
+            cout << "Checkin : " << guest.checkindate[i];
+            cout << "\nCheckout : " << guest.checkoutdate[i];
         }
     }
     cout << "\n---------------------------------";   

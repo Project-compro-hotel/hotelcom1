@@ -441,8 +441,8 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
     {
         if(room.roomnumber[i] == num_check)
         {
-            cout << "Checkin : " << info.checkindate;
-            cout << "\nCheckout : " << info.checkoutdate;
+            cout << "Checkin : " << info.checkindate[i];
+            cout << "\nCheckout : " << info.checkoutdate[i];
         }
     }
     cout << "\n---------------------------------\n";   
