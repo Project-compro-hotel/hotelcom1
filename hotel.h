@@ -168,9 +168,9 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
     for(int i=0;i<roomNO;i++) {
     cout << "\n---------------------------------------------------------------------------------------";
         
-        cout << "\n[1] Standard  price : 1000 ฿.";
-        cout << "\n[2] Twin bed  price : 1500 ฿.";       
-        cout << "\n[3] Deluxe    price : 2000 ฿."; //เลือกชนิดของห้อง 3 ชนิด
+        cout << "\n[1] Standard  price : 1000 Baht";
+        cout << "\n[2] Twin bed  price : 1500 Baht";       
+        cout << "\n[3] Deluxe    price : 2000 Baht"; //เลือกชนิดของห้อง 3 ชนิด
         cout << "\nPlease choose a room type : ";
         cin >> type;
     cout << "\n---------------------------------------------------------------------------------------";
@@ -215,17 +215,17 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
         if((slroom[i]%1000)/100==1){
             cout << "\nRoom type : " << room.type[0];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[0] << " ฿.";
+            cout << "\nRoom price : " << room.price[0] << " Baht";
             totalprice+=room.price[0];
         } else if((slroom[i]%1000)/100==2){
             cout << "\nRoom type : " << room.type[1];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[1] << " ฿.";
+            cout << "\nRoom price : " << room.price[1] << " Baht";
             totalprice+=room.price[1];
         } else{
             cout << "\nRoom type : " << room.type[2];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[2] << " ฿.";
+            cout << "\nRoom price : " << room.price[2] << " Baht";
             totalprice+=room.price[2];
         }
     cout << "\n---------------------------------------------------------------------------------------";
@@ -257,7 +257,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
      
     cout << "\n\n\t\t\t+----------------------------+";
     cout << "\n  \t\t\t|        Super Lucky         |";
-    cout << "\n  \t\t\t|          -15%              |";
+    cout << "\n  \t\t\t|       discount  15%        |";
     cout << "\n  \t\t\t+----------------------------+";
 
 			
@@ -267,7 +267,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
        
             cout << "\n\n\t\t\t\t+----------------------------+";
             cout << "\n  \t\t\t\t|         More Lucky         |";
-            cout << "\n  \t\t\t\t|          -30%              |";
+            cout << "\n  \t\t\t\t|        discount  30%       |";
             cout << "\n  \t\t\t\t+----------------------------+";
 		
 	}
@@ -276,7 +276,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
 		totalprice=totalprice-250;
             cout << "\n\n\t\t\t\t+----------------------------+";
             cout << "\n  \t\t\t\t|            Lucky           |";
-            cout << "\n  \t\t\t\t|            -250            |";
+            cout << "\n  \t\t\t\t|       discount 250 Baht    |";
             cout << "\n  \t\t\t\t+----------------------------+";
 		
 	}
@@ -285,7 +285,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
 		totalprice=totalprice-50;
             cout << "\n\n\t\t\t\t+----------------------------+";
             cout << "\n  \t\t\t\t|        Some Lucky          |";
-            cout << "\n  \t\t\t\t|            -50             |";
+            cout << "\n  \t\t\t\t|     discount 50 Baht       |";
             cout << "\n  \t\t\t\t+----------------------------+";
 			}
 	else{
@@ -293,7 +293,6 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
         
             cout << "\n\n\t\t\t\t+----------------------------+";
             cout << "\n  \t\t\t\t|          Unlucky           |";
-            cout << "\n  \t\t\t\t|            -0              |";
             cout << "\n  \t\t\t\t+----------------------------+";
        
 	}
@@ -301,7 +300,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
 
     totalprice=totalprice*Numofday; //รวมค่าใช้จ่าย
     cin.ignore();
-    cout << "\nTotal : " << totalprice << " ฿.";
+    cout << "\nTotal : " << totalprice << " Baht";
     //รับข้อมูลลูกค้า
     cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n                                 Guest information";
@@ -339,7 +338,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //�
     cout << "\nChecking room status by using this booking number.";
     cout << "\n\n\t\t\t\t+----------------------------+";
     cout << "\n  \t\t\t\t|       Booking Number       |";
-    cout << "\n  \t\t\t\t|           "<<bookingNum<<"            |";
+    cout << "\n  \t\t\t\t|      "<<bookingNum<<"      |";
     cout << "\n  \t\t\t\t+----------------------------+";
     cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n                           Thank you for choosing our hotel.";
@@ -393,7 +392,7 @@ void searchforRecep(const guestinfo info, const roomtype room){//ฟังก์
             if(checkin==info.checkindate[i]){
                 Showinfo(info,room,i);
             }
-        }
+        }               
     }
 
 }
