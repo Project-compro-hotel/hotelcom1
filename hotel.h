@@ -146,20 +146,20 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //à¸
         case 8:
         case 10:
         case 12:
-            Numofday = ((month[1]-month[0])*31)-date[0]+date[1]+1;
+            Numofday = ((month[1]-month[0])*31)-date[0]+date[1];
             break;
         case 4:
         case 6:
         case 9:
         case 11:
-            Numofday = ((month[1]-month[0])*30)-date[0]+date[1]+1;
+            Numofday = ((month[1]-month[0])*30)-date[0]+date[1];
             break;
         case 2:
             if(year%4==0){
-                Numofday = ((month[1]-month[0])*29)-date[0]+date[1]+1;
+                Numofday = ((month[1]-month[0])*29)-date[0]+date[1];
                 break;
             } else{
-                Numofday = ((month[1]-month[0])*28)-date[0]+date[1]+1;
+                Numofday = ((month[1]-month[0])*28)-date[0]+date[1];
                 break;
             }
     }
@@ -338,7 +338,7 @@ void booking(roomtype &room,guestinfo &info,vector<guestinfo> &roomstatus){ //à¸
     cout << "\nChecking room status by using this booking number.";
     cout << "\n\n\t\t\t\t+----------------------------+";
     cout << "\n  \t\t\t\t|       Booking Number       |";
-    cout << "\n  \t\t\t\t|      "<<bookingNum<<"      |";
+    cout << "\n  \t\t\t\t|            "<<bookingNum<<"           |";
     cout << "\n  \t\t\t\t+----------------------------+";
     cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n                           Thank you for choosing our hotel.";
