@@ -487,13 +487,13 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     cin >> checkA;
     checkA=toupper(checkA);
 
-    if(checkA != 'T' && checkA != 'F')//ใส่ค่าไม่ถูกต้อง
+    while(checkA != 'T' && checkA != 'F')//ใส่ค่าไม่ถูกต้อง
     {
         cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\n[S] Standard\n[T] Twin bed \n[D]  Deluxe";
+        cout << "\nRoom type[T] or Floor[F] ";
         cout << "\nPlease input again!! : ";
-        cin >> checkAt;
-        checkAt=toupper(checkAt);
+        cin >> checkA;
+        checkAt=toupper(checkA);
     }
 
     if(checkA == 'T')//หาจากประเภทห้อง
