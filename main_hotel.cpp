@@ -4,7 +4,6 @@ int main() {
     srand(time(0));
     roomtype room;
     guestinfo info;
-    vector<guestinfo> roomstatus;
     //เพิ่มตั้งค่าห้องของอิ๋ว
     roomsetup(room);
     //ตัวเริ่มโปรแกรม
@@ -14,7 +13,7 @@ int main() {
                 //เพิ่มฟังก์ชันหาของอัพ
                 searchforGuest(info,room);
             }else{
-                booking(room,info,roomstatus);
+                booking(room,info);
             }
         }else{ //checkuser==0 จะเข้าสู่เมนูของพนักงาน
             for(int i=0;i<4;i++){ //ลูปให้ใส่ username,password ได้ไม่เกิน 3 ครั้ง
