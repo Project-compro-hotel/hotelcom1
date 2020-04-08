@@ -7,6 +7,7 @@
 using namespace std;
 
 vector<string> reservedroom;
+int income = 0;
 
 struct roomtype{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับห้อง
     string type[3];
@@ -95,6 +96,7 @@ int checkuser(){ //ฟังก์ชันแรกรับอินพุต�
     if(menu=='1') return 1;
     else if(menu=='2') return 0;
 }
+
 int guestpart(){ //ฟังก์ชันต่อจาก checkuser เป็นพาร์ทของลูกค้า
     char menu;
     cout << "\n\n\t\t\t  +--------------------------------------+";
@@ -125,6 +127,13 @@ int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป�
         cout << "\n---------------------------------------------------------------------------------------";
         return 0;
     }
+}
+
+int plus_income(int price)
+{
+    income = income + price;
+
+    return income;
 }
 
 void booking(roomtype &room,guestinfo &info){ //ฟังก์ชันการจอง
@@ -353,6 +362,7 @@ void booking(roomtype &room,guestinfo &info){ //ฟังก์ชันกา�
     totalprice=totalprice*Numofday; //รวมค่าใช้จ่าย
     cin.ignore();
     cout << "\nTotal : " << totalprice << " Baht";
+    plus_income(totalprice);
     //รับข้อมูลลูกค้า
     cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n                                 Guest information";
@@ -411,7 +421,6 @@ void searchforRecep(const guestinfo info, const roomtype room){//ฟังก์
     char cmd;
     string name,checkin;
     int roomNO;
-    cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n      Manage a room";
     cout << "\n---------------------------------------------------------------------------------------";
     cout << "\n[N] Searching by name";
@@ -515,7 +524,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                 }
             }
         }
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "\n---------------------------------------------------------------------------------------\n";
 
     }
 
@@ -532,7 +541,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
             if(room.roomnumber[i]/1000 == checkAf)
                 cout << room.roomnumber[i] << " ";
         }
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "\n---------------------------------------------------------------------------------------\n";
     }
 
 
@@ -541,7 +550,6 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
 void check_checkin(const roomtype room,const guestinfo info)//เช็คหาวันที่เข้าพักจากเลขห้อง
 {
     int num_check;
-    cout << "\n---------------------------------------------------------------------------------------";
     cout << "\nPlease select room : ";
     cin >> num_check;
     for(int i =0;i < 24;i++)
@@ -552,35 +560,52 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
             cout << "\nCheckout : " << info.checkoutdate[i];
         }
     }
-    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\n---------------------------------------------------------------------------------------\n";
 
 }
 
-void recepFunc(const roomtype room,const guestinfo info)
+void check_income(const int income)
+{
+    cout << "\nTotal income = " << income << " baht";
+    cout << "\n---------------------------------------------------------------------------------------\n";
+}
+
+void recepFunc(const roomtype room,const guestinfo info,const int income)
 {
     char menuR;
     cout << "\nWelcome!";
-    cout << "\nWhat do you want to check?";
-    cout << "\n[A] Check available room";
-    cout << "\n[D] Check checkin and checkout date";
-    cout << "\n[S] Search information";
-    cout << "\nPlease select : ";
-    cin >> menuR;
-    cout << "\n---------------------------------------------------------------------------------------";
-    menuR=toupper(menuR);
-
-    while(menuR != 'A' && menuR != 'D' && menuR != 'R')
+    while(menuR != 'E')
     {
-        cout << "Please input again : ";
+        cout << "\nWhat do you want to check?";
+        cout << "\n[A] Check available room";
+        cout << "\n[D] Check checkin and checkout date";
+        cout << "\n[C] Check total income";
+        cout << "\n[S] Search information";
+        cout << "\n[E] Exit";
+        cout << "\nPlease select : ";
         cin >> menuR;
-    }
-    if(menuR == 'A')
+        cout << "\n---------------------------------------------------------------------------------------";
+        menuR=toupper(menuR);
+
+        while(menuR != 'A' && menuR != 'D' && menuR != 'S' && menuR != 'E' && menuR != 'C')
+        {
+            cout << "\nPlease input again : ";
+            cin >> menuR;
+            menuR=toupper(menuR);
+        }
+
+        if(menuR == 'A')
         check_Aroom(room);
 
-    if(menuR == 'D')
+        if(menuR == 'D')
         check_checkin(room,info);
 
-    if(menuR == 'R')
+        if(menuR == 'S')
         searchforRecep(info,room);
+
+        if(menuR == 'C')
+        check_income(income);
+
+    }
 
 }

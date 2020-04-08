@@ -18,7 +18,7 @@ int main() {
         }else{ //checkuser==0 จะเข้าสู่เมนูของพนักงาน
             for(int i=0;i<4;i++){ //ลูปให้ใส่ username,password ได้ไม่เกิน 3 ครั้ง
                 if(receplogin()==1){
-                    recepFunc(room,info);
+                    recepFunc(room,info,income);
                     break;
                 }
                 else{
