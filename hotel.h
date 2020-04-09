@@ -22,6 +22,7 @@ struct roomdata{
     int roomnumber;
     int price;
 };
+
 struct guestinfo{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับลูกค้า
     string name;
     string email;
@@ -98,8 +99,6 @@ void Showinfo(const string data[100][10],int loc){
     cout<<"+------------------------------------------------------------------------------------------+\n";
 }
 
-
-
 int checkuser(){ //ฟังก์ชันแรกรับอินพุตเพื่อแยกลูกค้ากับหนักงาน
     char menu;
     cout << "\n\n\n\n\n\n                               Hotel Management System ";
@@ -151,7 +150,6 @@ void plus_income(int price,int &income)
 {
     income = income + price;
 }
-
 
 void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟังก์ชันการจอง
     int date[2], month[2], year[2], slroom[10], roomNO, totalprice = 0, bookingNum, Numofday = 0;
@@ -664,8 +662,38 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
 void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห้องว่าง
 {
     char checkA,checkAt;
-    int checkAf;
+    int checkAf,roomnum[100],date[2],month[2],year[2],datein[2],monthin[2],yearin[2],dateout[2],monthout[2],yearout[2];
+    string checkin,data[100][10];
+    bool Aroom = true;
+
+    for(int i=0;i<guestdata.size();i++){
+        int start=0,para=0;
+        int end=guestdata[i].find_first_of(",");
+        while(end!=-1){
+            data[i][para]=guestdata[i].substr(start,end-start);
+            start=end+1;
+            end=guestdata[i].find_first_of(",",start);
+            para++;
+        }
+        data[i][para]=guestdata[i].substr(start,guestdata[i].size()-start);
+        /*ข้อมูลถูกเก็บไว้ดังนี้
+         data[ลำดับของลูกค้า][]
+         data[][0] = ชื่อลูกค้า
+         data[][1] = อีเมล
+         data[][2] = หมายเลขโทรศัพท์
+         data[][3] = วันเช็คอิน
+         data[][4] = วันเช็คเอาท์
+         data[][5] = หมายเลขการจอง
+         data[][6] = ห้องที่จอง
+         data[][7] = ชนิดของห้อง
+         data[][8] = จำนวนเงินทั้งหมดที่จ่าย
+         */
+    }
+
     cout << "\nCheck available room";
+    /*cout << "\nPlease input day you would like to check : ";
+    cin >> checkin;
+    sscanf(checkin.c_str(), "%d/%d/%d", &date[0], &month[0], &year[0]);*/
     cout << "\nRoom type[T] or Floor[F] : ";//ให้เลือกว่าจะหาจากอะไร มีประเภทห้อง กับ ชั้น
     cin >> checkA;
     checkA=toupper(checkA);
@@ -679,32 +707,71 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         checkAt=toupper(checkA);
     }
 
+    /*for(int i = 0;i < guestdata.size();i++) 
+    {
+        sscanf(data[i][3].c_str(), "%d/%d/%d", &datein[0], &monthin[0], &yearin[0]); 
+        sscanf(data[i][4].c_str(), "%d/%d/%d", &dateout[0], &monthout[0], &yearout[0]);
+        if(date[0])
+
+    }*/
+
     if(checkA == 'T')//หาจากประเภทห้อง
     {
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\n[S] Standard\n[T] Twin bed \n[D]  Deluxe";
-        cout << "\nPlease input again!! : ";
+        cout << "\nPlease select room type : ";
         cin >> checkAt;
         checkAt=toupper(checkAt);
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\nAvailable room : ";
-        if (checkAt == 'S') {
-            for (int k = 0; k < 24; k++) {
-                if (((room.roomnumber[k] % 1000) / 100) == 1 && room.status[k] != 'U') {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด
+        if (checkAt == 'S') 
+        {
+            for (int k = 0; k < 24; k++) 
+            {
+                for(int i =0;i < guestdata.size();i++)
+                {
+                    if (((room.roomnumber[k] % 1000) / 100) == 1 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str())) 
+                    {
+                        Aroom = false;
+                    }
+                } 
+                if(((room.roomnumber[k] % 1000) / 100) == 1 && Aroom == true) 
+                {
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด   
                 }
+                Aroom = true;
             }
         } else if (checkAt == 'T') {
-            for (int k = 0; k < 24; k++) {
-                if (((room.roomnumber[k] % 1000) / 100) == 2 && room.status[k] != 'U') {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดtwinbedที่ว่างอยู่ทั้งหมด
+            for (int k = 0; k < 24; k++) 
+            {
+                for(int i =0;i < guestdata.size();i++)
+                {
+                    if (((room.roomnumber[k] % 1000) / 100) == 2 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str())) 
+                    {
+                        Aroom = false;
+                    }
+                } 
+                if(((room.roomnumber[k] % 1000) / 100) == 2 && Aroom == true) 
+                {
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดtwinที่ว่างอยู่ทั้งหมด   
                 }
+                Aroom = true;
             }
         } else {
-            for (int k = 0; k < 24; k++) {
-                if (((room.roomnumber[k] % 1000) / 100) == 3 && room.status[k] != 'U') {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดdeluxeที่ว่างอยู่ทั้งหมด
+            for (int k = 0; k < 24; k++) 
+            {
+                for(int i =0;i < guestdata.size();i++)
+                {
+                    if (((room.roomnumber[k] % 1000) / 100) == 3 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str())) 
+                    {
+                        Aroom = false;
+                    }
+                } 
+                if(((room.roomnumber[k] % 1000) / 100) == 3 && Aroom == true) 
+                {
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดdeluxeที่ว่างอยู่ทั้งหมด   
                 }
+                Aroom = true;
             }
         }
         cout << "\n---------------------------------------------------------------------------------------\n";
@@ -716,13 +783,22 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\nPlease select floor 1 2 3 4 : ";
         cin >> checkAf;
-
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\nAvailable room : ";
-        for(int i = 0;i < 24;i++)
+        for (int k = 0; k < 24; k++) 
         {
-            if(room.roomnumber[i]/1000 == checkAf)
-                cout << room.roomnumber[i] << " ";
+            for(int i =0;i < guestdata.size();i++)
+            {
+                if (((room.roomnumber[k]/1000)) == checkAf && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str())) 
+                {
+                    Aroom = false;
+                }
+            } 
+            if(((room.roomnumber[k]/1000)) == checkAf && Aroom == true) 
+            {
+                cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด   
+            }
+            Aroom = true;
         }
         cout << "\n---------------------------------------------------------------------------------------\n";
     }
@@ -757,7 +833,6 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
     }
-    cout << "\n---------------------------------------------------------------------------------------";
     cout << "\nPlease select room : ";
     cin >> num_check;
     for(int i =0;i < guestdata.size();i++)
