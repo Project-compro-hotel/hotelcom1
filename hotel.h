@@ -458,13 +458,15 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
             M++;
         }
     }
-    string A;
     if (M >= 12) {
         totalprice = totalprice;
     } else if (M >= 6) {
         totalprice = totalprice + 200;
     } else if (M >= 3) {
-        totalprice = totalprice + 200;
+        totalprice = totalprice + 400;
+    }
+    else{
+        totalprice = totalprice + 600;
     }
     int C = rand() % 10;
     cout << "\n\n\t\t\t\t+----------------------------+";
