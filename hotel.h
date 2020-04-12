@@ -4,6 +4,7 @@
 #include <vector>
 #include <ctime>
 #include <cctype>
+
 using namespace std;
 
 int income = 0;
@@ -82,15 +83,17 @@ void Showinfo(const string data[100][10],int loc){
            data[][7] = ชนิดของห้อง
            data[][8] = จำนวนเงินทั้งหมดที่จ่าย
            */
-    cout<<"\n\n+------------------------------------------------------------------------------------------+\n";
-    cout<<       "|                                      GUEST INFORMATION                                   |\n";
-    cout<<        "+------------------------------------------------------------------------------------------+\n";
+    cout<<      "\n+------------------------------------------------------------------------------------------+\n";
+    cout<<      "|                                      GUEST INFORMATION                                   |\n";
+    cout<<      "+------------------------------------------------------------------------------------------+\n";
 
-    cout<<     "|      Room number     : "<< data[loc][6]<<"                                                              |";
+    cout<<       "|      Room Type       : "<< data[loc][7]<<  "\t\t\tRoom Number    : "<<data[loc][6]<<"              |";
 
-    cout<<     "\n|      Name            : "<<data[loc][0] <<"\t\tBooking Number : "<<data[loc][5]<<"                     |";
+    cout<<     "\n|      Name            : "<<data[loc][0] <<  "\t\t\tBooking Number : "<<data[loc][5]<<"             |";
 
-    cout<<     "\n|      Email           : "<<data[loc][1] <<"\tTel            : "<<data[loc][2]<<"                |";
+    cout<<     "\n|      Email           : "<<data[loc][1] <<    "\t\tTel            : "<<data[loc][2]<<"        |";
+
+    cout<<     "\n|      Check in        : "<<data[loc][3] <<  "\t\t\tCheck out      : "<<data[loc][4]<<"        |";
 
     cout<<     "\n|      Cleaning status : ";
     int Clean= rand()%2;
@@ -101,14 +104,19 @@ void Showinfo(const string data[100][10],int loc){
 
 int checkuser(){ //ฟังก์ชันแรกรับอินพุตเพื่อแยกลูกค้ากับหนักงาน
     char menu;
-    cout << "\n\n\n\n\n\n                               Hotel Management System ";
-    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\n\n\n";
+    cout <<   "###########################################################################################";
+    cout << "\n# +-------------------------------------------------------------------------------------+ #";
+    cout << "\n# |                                Hotel Management System                              | #";
+    cout << "\n# +-------------------------------------------------------------------------------------+ #";
+    cout << "\n###########################################################################################\n";
 
+    cout << "  \n\t\t\t              [1] Guest";
+    cout << "  \n\t\t\t              [2] Receptionist";
 
-
-    cout << "\n[1] Guest \n[2] Receptionist ";
-    cout << "\n\nPlease select the menu : ";
-    cin >> menu;
+    cout << "\n---------------------------------------------------------------------------------------"; 
+    cout << "\nPlease select the MENU : ";cin >> menu;
+    cout << "---------------------------------------------------------------------------------------";
 
     if(menu=='1') return 1;
     else if(menu=='2') return 0;
@@ -116,26 +124,33 @@ int checkuser(){ //ฟังก์ชันแรกรับอินพุต�
 
 int guestpart(){ //ฟังก์ชันต่อจาก checkuser เป็นพาร์ทของลูกค้า
     char menu;
-    cout << "\n\n\t\t\t  +--------------------------------------+";
-    cout << "  \n\t\t\t  |        Welcome to ..... hotel        |";
-    cout << "  \n\t\t\t  +--------------------------------------+";
+    cout << "\n\n\t\t\t+--------------------------------------+";
+    cout << "  \n\t\t\t|             GUEST MENU               |";
+    cout << "  \n\t\t\t+--------------------------------------+";
 
+    cout << "  \n\t\t\t      [1] Manage your booking";
+    cout << "  \n\t\t\t      [2] Make a booking";
 
-    cout << "\n[1] Manage your booking\n[2] Make a booking\n "; //ให้เลือกระหว่างเช็คสถานะการจอง,ห้อง กับ จองห้อง
-    cout << "\nPlease select the menu : ";
-    cin >> menu;
-    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\n---------------------------------------------------------------------------------------";   
+    cout << "\nPlease select : ";cin >> menu;
+    cout << "---------------------------------------------------------------------------------------";
 
-    if(menu=='1'){ return 1;
-    }else if(menu=='2'){ return 0;}
+    if(menu=='1')return 1;
+    else if(menu =='2') return 0;
+    else if(menu =='3') return 2;
+    else if(menu != '1' && menu != '2' && menu !='3' )return 3;//แก้
+    
+    
 }
 
 int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป็นพาร์ทของพนักงาน
     string username,password;
-    cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\nusername : ";
+    cout << "\n\n\t\t\t+--------------------------------------+";
+    cout << "  \n\t\t\t|          Receptionist MENU           |";
+    cout << "  \n\t\t\t+--------------------------------------+";
+    cout << "\n                             ==> Username : ";
     cin >> username;
-    cout << "password : ";
+    cout <<   "                             ==> Password : ";
     cin >> password;
     if(username=="admin"&&password=="admin"){ //set username,password = admin
         cout << "\n---------------------------------------------------------------------------------------";
@@ -161,13 +176,15 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
     cout << "\n  \t\t\t|         Booking your rooms           |";
     cout << "\n  \t\t\t+--------------------------------------+";
     do {
-        cout << "\nPlease in put a check-in  date (dd/mm/yyyy) : "; //รับวันเช็คอิน
+        cout << "\nPlease in put your information of Booking...\n";
+        cout << "---------------------------------------------------------------------------------------";
+        cout << "\n==> check-in  date (dd/mm/yyyy) : "; //รับวันเช็คอิน
         cin >> checkin;
         sscanf(checkin.c_str(), "%d/%d/%d", &date[0], &month[0], &year[0]);
-        cout << "Please in put a check-out date (dd/mm/yyyy) : "; //รับวันเช็คเอาท์
+        cout << "==> check-out date (dd/mm/yyyy) : "; //รับวันเช็คเอาท์
         cin >> checkout;
         sscanf(checkout.c_str(), "%d/%d/%d", &date[1], &month[1], &year[1]);
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "---------------------------------------------------------------------------------------";
         if (year[0] == year[1]) {
             if (date[0] < date[1] && month[1] == month[0] || month[1] > month[0]) break;
         } else if (year[0] < year[1]) {
@@ -241,7 +258,7 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
         }
     }
 
-    cout << "\nNumber of room : "; //เช็คจำนวนห้องที่จะจอง
+    cout << "\n                              ==> Number of room : "; //เช็คจำนวนห้องที่จะจอง
     cin >> roomNO;
     for (int s = 0; s < unaviroom.size(); s++) {
         int temp = 0;
@@ -271,38 +288,40 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
                 }
             }
         } else { //กรณีอื่นๆ
-            if(year[0]==year[1]&&rsyear[0]==rsyear[1]&&year[0]==rsyear[1]){//กรณีปีเท่ากันทั้งหมด
-                if (month[0] == month[1] && rsmonth[0] == rsmonth[1] && month[0] == rsmonth[0] ) { // ถ้าเดือนเดียวกันทั้งหมด
-                    if (rsdate[0] <= date[0] && date[0] < rsdate[1] ||
-                        rsdate[0] < date[1] && date[1] <= rsdate[1]) { //กรณีวันที่เช็คอินหรือเช็คเอาท์อยู่ระหว่างข้อมูล
-                        room.status[temp] = 'U';
-                    } else if (date[0] < rsdate[0] && date[1] > rsdate[1]) { //กรณีวันที่เช็คอินและเช็คเอาท์อยู่ครอบข้อมูล
-                        room.status[temp] = 'U';
+                if(year[0]==year[1]&&rsyear[0]==rsyear[1]&&year[0]==rsyear[1]){//กรณีปีเท่ากันทั้งหมด
+                    if (month[0] == month[1] && rsmonth[0] == rsmonth[1] && month[0] == rsmonth[0] ) { // ถ้าเดือนเดียวกันทั้งหมด
+                        if (rsdate[0] <= date[0] && date[0] < rsdate[1] ||
+                            rsdate[0] < date[1] && date[1] <= rsdate[1]) { //กรณีวันที่เช็คอินหรือเช็คเอาท์อยู่ระหว่างข้อมูล
+                            room.status[temp] = 'U';
+                        } else if (date[0] < rsdate[0] && date[1] > rsdate[1]) { //กรณีวันที่เช็คอินและเช็คเอาท์อยู่ครอบข้อมูล
+                            room.status[temp] = 'U';
+                        }
+                    }
+                }else{
+                    if (month[0] < month[1] && rsmonth[0] < rsmonth[1] && rsmonth[0] <= month[0] &&month[0] <= rsmonth[1]) { //กรณีเดือนไม่เท่า รวมถึงปีไม่เท่าด้วยเพราะถ้าเปลี่ยนปี=เปลี่ยนเดือน
+                        if (date[0] >= rsdate[0] || date[0] < rsdate[1]) { //กรณีวันที่เช็คอินอยู่ระหว่างข้อมูล
+                            room.status[temp] = 'U';
+                        } else if (date[1] > rsdate[1] || date[1] <= rsdate[1]) { //กรณีวันที่เช็คเอาท์อยู่ระหว่างข้อมูล
+                            room.status[temp] = 'U';
+                        } else if (date[0] < rsdate[0] &&date[1] > rsdate[1]) { //กรณีที่วันที่เช็คอินและเช็คเอาท์อยู่ครอบข้อมูล
+                            room.status[temp] = 'U';
+                        }
                     }
                 }
-            }else{
-                if (month[0] < month[1] && rsmonth[0] < rsmonth[1] && rsmonth[0] <= month[0] &&month[0] <= rsmonth[1]) { //กรณีเดือนไม่เท่า รวมถึงปีไม่เท่าด้วยเพราะถ้าเปลี่ยนปี=เปลี่ยนเดือน
-                    if (date[0] >= rsdate[0] || date[0] < rsdate[1]) { //กรณีวันที่เช็คอินอยู่ระหว่างข้อมูล
-                        room.status[temp] = 'U';
-                    } else if (date[1] > rsdate[1] || date[1] <= rsdate[1]) { //กรณีวันที่เช็คเอาท์อยู่ระหว่างข้อมูล
-                        room.status[temp] = 'U';
-                    } else if (date[0] < rsdate[0] &&date[1] > rsdate[1]) { //กรณีที่วันที่เช็คอินและเช็คเอาท์อยู่ครอบข้อมูล
-                        room.status[temp] = 'U';
-                    }
-                }
-            }
 
-        }
+            }
     }
     for (int i = 0; i < roomNO; i++) {
+        cout << "---------------------------------------------------------------------------------------";
+        cout << "\n                                     Room Type         ";
         cout << "\n---------------------------------------------------------------------------------------";
-
-        cout << "\n[1] Standard  price : 1000 Baht";
-        cout << "\n[2] Twin bed  price : 1500 Baht";
-        cout << "\n[3] Deluxe    price : 2000 Baht"; //เลือกชนิดของห้อง 3 ชนิด
-        cout << "\nPlease choose a room type : ";
+        cout << "\n                        [1] Standard  price : 1000 Baht";
+        cout << "\n                        [2] Twin bed  price : 1500 Baht";
+        cout << "\n                        [3] Deluxe    price : 2000 Baht"; //เลือกชนิดของห้อง 3 ชนิด
+        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "\nPlease select : ";
         cin >> type;
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "---------------------------------------------------------------------------------------";
         //เงื่อนไขในการเช็คห้องว่าง
 
         while(1){ //debug ไม่ให้แสดงห้องที่ถูกเลือกไปแล้ว
@@ -357,6 +376,8 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
             }else{ //ถ้าเลือกtypeผิดให้เปลี่ยนใหม่
                 cout << "\nPlease select again : ";
                 cin >> type;
+                cout << "\n---------------------------------------------------------------------------------------";
+
             }
         }
 
@@ -427,26 +448,26 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
     }
     //คอนเฟิร์มห้อง
     cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\n                  Booking information";
+    cout << "\n                                Booking information";
     cout << "\n---------------------------------------------------------------------------------------";
     //แสดงสถานะห้องที่เลือก
     for (int i = 0; i < roomNO; i++) {
         cout << "\nRoom " << i + 1 << " Information";
         cout << "\n---------------------------------------------------------------------------------------";
         if ((slroom[i] % 1000) / 100 == 1) {
-            cout << "\nRoom type : " << room.type[0];
+            cout << "\nRoom type   : " << room.type[0];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[0] << " Baht";
+            cout << "\nRoom price  : " << room.price[0] << " Baht";
             totalprice += room.price[0];
         } else if ((slroom[i] % 1000) / 100 == 2) {
-            cout << "\nRoom type : " << room.type[1];
+            cout << "\nRoom type   : " << room.type[1];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[1] << " Baht";
+            cout << "\nRoom price  : " << room.price[1] << " Baht";
             totalprice += room.price[1];
         } else {
-            cout << "\nRoom type : " << room.type[2];
+            cout << "\nRoom type   : " << room.type[2];
             cout << "\nRoom number : " << slroom[i];
-            cout << "\nRoom price : " << room.price[2] << " Baht";
+            cout << "\nRoom price  : " << room.price[2] << " Baht";
             totalprice += room.price[2];
         }
         cout << "\n---------------------------------------------------------------------------------------";
@@ -463,11 +484,15 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
     } else if (M >= 6) {
         totalprice = totalprice + 200;
     } else if (M >= 3) {
-        totalprice = totalprice + 400;
+         totalprice = totalprice + 400;
     }
     else{
         totalprice = totalprice + 600;
     }
+    cout << "\n\t\t\t\t       %%%% Promotion %%%% ";
+    cout << "\n---------------------------------------------------------------------------------------";
+
+     
     int C = rand() % 10;
     cout << "\n\n\t\t\t\t+----------------------------+";
     cout << "\n  \t\t\t\t|     Random Lucky Number    |";
@@ -477,10 +502,10 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
         totalprice = totalprice * 85 / 100;
 
 
-        cout << "\n\n\t\t\t+----------------------------+";
-        cout << "\n  \t\t\t|        Super Lucky         |";
-        cout << "\n  \t\t\t|       discount  15%        |";
-        cout << "\n  \t\t\t+----------------------------+";
+        cout << "\n\n\t\t\t\t+----------------------------+";
+        cout << "\n  \t\t\t\t|        Super Lucky         |";
+        cout << "\n  \t\t\t\t|       discount  15%        |";
+        cout << "\n  \t\t\t\t+----------------------------+";
 
 
     } else if (C == 5) {
@@ -517,23 +542,23 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
     cout << "\n---------------------------------------------------------------------------------------";
 
     cin.ignore();
-    cout << "\nTotal : " << totalprice << " Baht";
+    cout << "\n                      $$$$$$$$$$  Total : " << totalprice << " Baht $$$$$$$$$$$";
     reservedroom.price=totalprice;
     plus_income(totalprice,income);
     //รับข้อมูลลูกค้า
     cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\n                                 Guest information";
+    cout << "\n                                    Guest information";
     cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\nName : ";
+    cout << "\n                             ==> Name  : ";
     getline(cin, name);
-    cout << "Email: ";
+    cout <<   "                             ==> Email : ";
     cin >> email;
-    cout << "Tel  : ";
+    cout <<   "                             ==> Tel   : ";
     cin >> phonenumber;
     //คอนเฟิร์มการจอง
-    cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\nConfirm booking information";
-    cout << "\n    YES[Y] or NO[N] : ";
+    cout << "---------------------------------------------------------------------------------------";
+    cout << "\n                               Confirm booking information";
+    cout << "\n                                    YES[Y] or NO[N] : ";
     cin >> confirm;
     confirm = toupper(confirm);
     if (confirm == 'Y') {
@@ -550,24 +575,31 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
             unaviroom.push_back(rsroom[i]);
             guestdata.push_back(textline);
         }
-
-        cout << "\n---------------------------------------------------------------------------------------";
+        
+     
+        cout << "\n----------------------------------------------------------------------------------------";
         cout << "\nChecking room status by using this booking number.";
         cout << "\n\n\t\t\t\t+----------------------------+";
         cout << "\n  \t\t\t\t|       Booking Number       |";
         cout << "\n  \t\t\t\t|            " << bookingNum << "           |";
         cout << "\n  \t\t\t\t+----------------------------+";
-        cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\n                           Thank you for choosing our hotel.";
-        cout << "\n                            *** Have a nice vacation ***";
-        cout << "\n---------------------------------------------------------------------------------------";
+
+
+        cout << "\n\n\t\t\t+----------------------------------------------+";
+        cout << "\n  \t\t\t|       Thank you for choosing our hotel.      |";
+        cout << "\n  \t\t\t|         *** Have a nice vacation ***         |";
+        cout << "\n  \t\t\t+----------------------------------------------+";
+        cout << "\n----------------------------------------------------------------------------------------";
+
         for(int i=0;i<guestdata.size();i++){
             cout << "\n" << guestdata[i] << "\n";
         }
     } else {
-        cout << "\n---------------------------------------------------------------------------------------";
-        cout << "*** Booking was canceled ***";
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "\n\n\t\t\t+----------------------------------------------+";
+        cout << "\n  \t\t\t|         *** Booking was canceled ***         |";
+        cout << "\n  \t\t\t+----------------------------------------------+";
+        cout << "\n----------------------------------------------------------------------------------------";
+
     }
 }
 
@@ -599,9 +631,9 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
     }
-    cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\n      Manage a room";
-    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\n\n\t\t\t+--------------------------------------+";
+    cout << "\n  \t\t\t|            Manage a room             |";
+    cout << "\n  \t\t\t+--------------------------------------+";
     cout << "\n[N] Searching by name";
     cout << "\n[R] room number";
     cout << "\n[C] check-in date";
@@ -640,6 +672,7 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
     }
 
 }
+//#########################################################################################################
 
 void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก์ชันการค้นหาของลูกค้า
     string bookingNO;
@@ -667,24 +700,27 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
     }
-    cout << "\n---------------------------------------------------------------------------------------";
-    cout << "\nManage a room";
-    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\n\n\t\t\t+--------------------------------------+";
+    cout << "\n  \t\t\t|            Manage a room             |";
+    cout << "\n  \t\t\t+--------------------------------------+";
     cout << "\nSearching by booking number";
+    cout << "\n---------------------------------------------------------------------------------------";
     cout << "\nPlease input your booking number : ";
     cin >> bookingNO;
-    cout << "\n---------------------------------------------------------------------------------------";
     for(int i = 0; i < guestdata.size(); i++){
         if(bookingNO==data[i][5]){
             Showinfo(data,i);
+
         }
     }
 
 }
+//#########################################################################################################
 
 void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห้องว่าง
 {
     char checkA,checkAt;
+   
     int checkAf,roomnum[100],date[2],month[2],year[2],datein[2],monthin[2],yearin[2],dateout[2],monthout[2],yearout[2];
     string checkin,data[100][10];
     bool Aroom = true;
@@ -712,41 +748,60 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
     }
+   
+    cout << "\n\n\t\t\t+--------------------------------------+";
+    cout <<   "\n\t\t\t|         Check available room         |";
+    cout <<   "\n\t\t\t+--------------------------------------+";
 
-    cout << "\nCheck available room";
     /*cout << "\nPlease input day you would like to check : ";
     cin >> checkin;
     sscanf(checkin.c_str(), "%d/%d/%d", &date[0], &month[0], &year[0]);*/
-    cout << "\nRoom type[T] or Floor[F] : ";//ให้เลือกว่าจะหาจากอะไร มีประเภทห้อง กับ ชั้น
+    cout <<  "\n\t\t\t             [1] Room type";
+    cout <<  "\n\t\t\t             [2] Floor";
+    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\nPlease select : ";
     cin >> checkA;
-    checkA=toupper(checkA);
+    cout << "---------------------------------------------------------------------------------------";
 
-    while(checkA != 'T' && checkA != 'F')//ใส่ค่าไม่ถูกต้อง
+
+    while(checkA != '1' && checkA != '2' )//ใส่ค่าไม่ถูกต้อง
     {
         cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\nRoom type[T] or Floor[F] ";
-        cout << "\nPlease input again!! : ";
+        cout << "\nPlease select again!! : ";
         cin >> checkA;
-        checkAt=toupper(checkA);
     }
 
-    /*for(int i = 0;i < guestdata.size();i++)
+    /*for(int i = 0;i < guestdata.size();i++) 
     {
-        sscanf(data[i][3].c_str(), "%d/%d/%d", &datein[0], &monthin[0], &yearin[0]);
+        sscanf(data[i][3].c_str(), "%d/%d/%d", &datein[0], &monthin[0], &yearin[0]); 
         sscanf(data[i][4].c_str(), "%d/%d/%d", &dateout[0], &monthout[0], &yearout[0]);
         if(date[0])
     }*/
-
-    if(checkA == 'T')//หาจากประเภทห้อง
+    
+    
+     if(checkA == '1')//หาจากประเภทห้อง
     {
-        cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\n[S] Standard\n[T] Twin bed \n[D]  Deluxe";
-        cout << "\nPlease select room type : ";
+    
+    cout <<"\n\n\t\t\t+--------------------------------------+";
+    cout <<  "\n\t\t\t|           Check Room Type            |";
+    cout <<  "\n\t\t\t+--------------------------------------+";
+    cout <<  "\n\t\t\t             [1] Standard";
+    cout <<  "\n\t\t\t             [2] Twin bed ";
+    cout <<  "\n\t\t\t             [3] Deluxe ";
+    cout << "\n---------------------------------------------------------------------------------------";
+    cout << "\nPlease select : ";
         cin >> checkAt;
-        checkAt=toupper(checkAt);
-        cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\nAvailable room : ";
-        if (checkAt == 'S')
+        cout << "---------------------------------------------------------------------------------------";
+
+        while(checkAt != '1' && checkAt != '2' && checkAt != '3')//ใส่ค่าไม่ถูกต้อง
+    {
+        cout << "\nPlease select again!! : ";
+        cin >> checkAt;
+    }
+      
+        cout << "\nAvailable  room : ";
+
+        if (checkAt == '1')
         {
             for (int k = 0; k < 24; k++)
             {
@@ -759,11 +814,13 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                 }
                 if(((room.roomnumber[k] % 1000) / 100) == 1 && Aroom == true)
                 {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด   
                 }
                 Aroom = true;
             }
-        } else if (checkAt == 'T') {
+                    cout << "\n---------------------------------------------------------------------------------------\n";
+
+        } else if (checkAt == '2') {
             for (int k = 0; k < 24; k++)
             {
                 for(int i =0;i < guestdata.size();i++)
@@ -775,11 +832,13 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                 }
                 if(((room.roomnumber[k] % 1000) / 100) == 2 && Aroom == true)
                 {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดtwinที่ว่างอยู่ทั้งหมด
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดtwinที่ว่างอยู่ทั้งหมด   
                 }
                 Aroom = true;
             }
-        } else {
+                    cout << "\n---------------------------------------------------------------------------------------\n";
+
+        } else if(checkAt == '3'){
             for (int k = 0; k < 24; k++)
             {
                 for(int i =0;i < guestdata.size();i++)
@@ -791,21 +850,30 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                 }
                 if(((room.roomnumber[k] % 1000) / 100) == 3 && Aroom == true)
                 {
-                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดdeluxeที่ว่างอยู่ทั้งหมด
+                    cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดdeluxeที่ว่างอยู่ทั้งหมด   
                 }
                 Aroom = true;
             }
-        }
+        
+    
         cout << "\n---------------------------------------------------------------------------------------\n";
-
+    
+    
     }
-
-    if(checkA == 'F')//หาจากชั้น
+    }
+    if(checkA == '2')//หาจากชั้น
     {
+        cout <<"\n\n\t\t\t+--------------------------------------+";
+        cout <<  "\n\t\t\t|         Check Room from Floor        |";
+        cout <<  "\n\t\t\t+--------------------------------------+";
+        cout <<  "\n\t\t\t              [1] Floor 1";
+        cout <<  "\n\t\t\t              [2] Floor 2";
+        cout <<  "\n\t\t\t              [3] Floor 3";
+        cout <<  "\n\t\t\t              [4] Floor 4";
         cout << "\n---------------------------------------------------------------------------------------";
-        cout << "\nPlease select floor 1 2 3 4 : ";
+        cout << "\nPlease select : ";
         cin >> checkAf;
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "---------------------------------------------------------------------------------------";
         cout << "\nAvailable room : ";
         for (int k = 0; k < 24; k++)
         {
@@ -826,7 +894,56 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     }
 
 
+
 }
+
+
+   /* if(checkA == '2')//หาจากชั้น
+    {
+        {
+        
+        cout <<"\n\n\t\t\t+--------------------------------------+";
+        cout <<  "\n\t\t\t|         Check Room from Floor        |";
+        cout <<  "\n\t\t\t+--------------------------------------+";
+        cout <<  "\n\t\t\t              [1] Floor 1";
+        cout <<  "\n\t\t\t              [2] Floor 2";
+        cout <<  "\n\t\t\t              [3] Floor 3";
+        cout <<  "\n\t\t\t              [4] Floor 4";
+
+        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "\nPlease select : ";
+        cin >> checkAf;
+
+        cout << "---------------------------------------------------------------------------------------";
+        cout << "\nAvailable room : ";
+
+        for (int k = 0; k < 24; k++)
+        {
+            for(int i =0;i < guestdata.size();i++)
+            {
+                if (((room.roomnumber[k]/1000)) == checkAf && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str()))
+                {
+                    Aroom = false;
+                }
+            }
+            if(((room.roomnumber[k]/1000)) == checkAf && Aroom == true)
+            {
+                cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด   
+            }
+            Aroom = true;
+        }
+        cout << "\n---------------------------------------------------------------------------------------";
+    }
+    }
+
+
+
+    }
+            cout << "\n---------------------------------------------------------------------------------------";
+
+}
+*/
+//#########################################################################################################
 
 void check_checkin(const roomtype room,const guestinfo info)//เช็คหาวันที่เข้าพักจากเลขห้อง
 {
@@ -855,60 +972,85 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
     }
+     /*  cout << "\nRoom Booked : ";
+    int roomsame[]={};//ทุกห้องที่จอง จะมีซ้ำกัน
+    for(int i = 0 ; i< guestdata.size(); i++){
+      roomsame[i] = stoi(data[i][6]);
+    }
+   
+    for (int i = 0; i < sizeof(roomsame)/sizeof(roomsame[0]); i++) //ให้แสดงห้องที่ซ้ำ ห้องเดียว
+    {
+     if(roomsame[i]==roomsame[i+1]) {cout << roomsame[i]<<" ";}
+     else {cout << roomsame[i]<<" ";}
+     
+    }
+    */   
     cout << "\nPlease select room : ";
     cin >> num_check;
+    cout << "---------------------------------------------------------------------------------------";
+
     for(int i =0;i < guestdata.size();i++)
     {
         if(stoi(data[i][6]) == num_check)
         {
-            cout << "Checkin : " << data[i][3];
-            cout << "\nCheckout : " << data[i][4]<<endl;
+            cout <<"  \n\t\t\t+--------------------------------------+";
+            cout <<  "\n\t\t\t|         Checkin   : " << data[i][3]<<"       |";
+            cout <<  "\n\t\t\t|         Checkout  : " << data[i][4]<<"       |";
+            cout <<  "\n\t\t\t+--------------------------------------+";
         }
     }
     cout << "\n---------------------------------------------------------------------------------------\n";
 
 }
 
+//#########################################################################################################
 void check_income(const int income)
 {
-    cout << "\nTotal income = " << income << " baht";
-    cout << "\n---------------------------------------------------------------------------------------\n";
+    cout << "\n                   $$$$$  Total income = " << income << " baht  $$$$$";
+    cout << "\n---------------------------------------------------------------------------------------";
 }
+//#########################################################################################################
 
 void recepFunc(const roomtype room,const guestinfo info)
 {
     char menuR;
-    cout << "\nWelcome!";
-    while(menuR != 'E')
+    
+    while(menuR != '5')
     {
-        cout << "\nWhat do you want to check?";
-        cout << "\n[A] Check available room";
-        cout << "\n[D] Check checkin and checkout date";
-        cout << "\n[C] Check total income";
-        cout << "\n[S] Search information";
-        cout << "\n[E] Exit";
+        cout << "\n\n\t\t\t+--------------------------------------+";
+        cout << "  \n\t\t\t|          Receptionist MENU           |";
+        cout << "  \n\t\t\t+--------------------------------------+";
+
+ 
+        cout << "\n                     [1] Check available room";
+        cout << "\n                     [2] Check checkin and checkout date";
+        cout << "\n                     [3] Check total income";
+        cout << "\n                     [4] Search information";
+        cout << "\n                     [5] Exit...";
+        
+        cout << "\n---------------------------------------------------------------------------------------";
         cout << "\nPlease select : ";
         cin >> menuR;
-        cout << "\n---------------------------------------------------------------------------------------";
+        cout << "---------------------------------------------------------------------------------------";
         menuR=toupper(menuR);
 
-        while(menuR != 'A' && menuR != 'D' && menuR != 'S' && menuR != 'E' && menuR != 'C')
+        while(menuR != '1' && menuR != '2' && menuR != '3' && menuR != '4' && menuR != '5')
         {
-            cout << "\nPlease input again : ";
+            cout << "\nPlease select again!! : ";
             cin >> menuR;
-            menuR=toupper(menuR);
+            
         }
 
-        if(menuR == 'A')
+        if(menuR == '1')
             check_Aroom(room);
 
-        if(menuR == 'D')
+        if(menuR == '2')
             check_checkin(room,info);
 
-        if(menuR == 'S')
+        if(menuR == '4')
             searchforRecep(info,room);
 
-        if(menuR == 'C')
+        if(menuR == '3')
             check_income(income);
 
     }
