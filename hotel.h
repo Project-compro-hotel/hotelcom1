@@ -722,9 +722,9 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
 {
     char checkA,checkAt;
    
-    int checkAf,roomnum[100],date[2],month[2],year[2],datein[2],monthin[2],yearin[2],dateout[2],monthout[2],yearout[2];
+    int checkAf,roomnum[100],date,month,year,dateU[2],monthU[2],yearU[2];
     string checkin,data[100][10];
-    bool Aroom = true;
+    bool Aroom = true ;
 
     for(int i=0;i<guestdata.size();i++){
         int start=0,para=0;
@@ -754,9 +754,10 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     cout <<   "\n\t\t\t|         Check available room         |";
     cout <<   "\n\t\t\t+--------------------------------------+";
 
-    /*cout << "\nPlease input day you would like to check : ";
+    cout << "\nPlease input month snd yearr you would like to check (mm/yyyy): ";
     cin >> checkin;
-    sscanf(checkin.c_str(), "%d/%d/%d", &date[0], &month[0], &year[0]);*/
+    sscanf(checkin.c_str(), "%d/%d", &month, &year);
+
     cout <<  "\n\t\t\t             [1] Room type";
     cout <<  "\n\t\t\t             [2] Floor";
     cout << "\n---------------------------------------------------------------------------------------";
@@ -771,15 +772,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         cout << "\nPlease select again!! : ";
         cin >> checkA;
     }
-
-    /*for(int i = 0;i < guestdata.size();i++) 
-    {
-        sscanf(data[i][3].c_str(), "%d/%d/%d", &datein[0], &monthin[0], &yearin[0]); 
-        sscanf(data[i][4].c_str(), "%d/%d/%d", &dateout[0], &monthout[0], &yearout[0]);
-        if(date[0])
-    }*/
-    
-    
+ 
      if(checkA == '1')//หาจากประเภทห้อง
     {
     
@@ -811,9 +804,16 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                     if (((room.roomnumber[k] % 1000) / 100) == 1 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str()))
                     {
                         Aroom = false;
+                        if(Aroom == false)
+                        {
+                            sscanf(data[i][3].c_str(), "%d/%d/%d", &dateU[0], &monthU[0], &yearU[0]); 
+                            sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
+                            if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
+                            Aroom = true;
+                        }
                     }
                 }
-                if(((room.roomnumber[k] % 1000) / 100) == 1 && Aroom == true)
+                if(((room.roomnumber[k] % 1000) / 100) == 1 && Aroom == true )
                 {
                     cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด   
                 }
@@ -829,9 +829,16 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                     if (((room.roomnumber[k] % 1000) / 100) == 2 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str()))
                     {
                         Aroom = false;
-                    }
+                        if(Aroom == false)
+                        {
+                            sscanf(data[i][3].c_str(), "%d/%d/%d", &dateU[0], &monthU[0], &yearU[0]); 
+                            sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
+                            if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
+                            Aroom = true;
+                        }
+                    } 
                 }
-                if(((room.roomnumber[k] % 1000) / 100) == 2 && Aroom == true)
+                if(((room.roomnumber[k] % 1000) / 100) == 2 && Aroom == true )
                 {
                     cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดtwinที่ว่างอยู่ทั้งหมด   
                 }
@@ -847,20 +854,22 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                     if (((room.roomnumber[k] % 1000) / 100) == 3 && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str()))
                     {
                         Aroom = false;
-                    }
+                        if(Aroom == false)
+                        {
+                            sscanf(data[i][3].c_str(), "%d/%d/%d", &dateU[0], &monthU[0], &yearU[0]); 
+                            sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
+                            if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
+                            Aroom = true;
+                        }
+                    } 
                 }
-                if(((room.roomnumber[k] % 1000) / 100) == 3 && Aroom == true)
+                if(((room.roomnumber[k] % 1000) / 100) == 3 && Aroom == true )
                 {
                     cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดdeluxeที่ว่างอยู่ทั้งหมด   
                 }
                 Aroom = true;
             }
-        
-    
-        cout << "\n---------------------------------------------------------------------------------------\n";
-    
-    
-    }
+        cout << "\n---------------------------------------------------------------------------------------\n";}
     }
     if(checkA == '2')//หาจากชั้น
     {
@@ -876,6 +885,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         cin >> checkAf;
         cout << "---------------------------------------------------------------------------------------";
         cout << "\nAvailable room : ";
+        
         for (int k = 0; k < 24; k++)
         {
             for(int i =0;i < guestdata.size();i++)
@@ -883,9 +893,16 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                 if (((room.roomnumber[k]/1000)) == checkAf && room.status[k] != 'U' && room.roomnumber[k] == atoi(data[i][6].c_str()))
                 {
                     Aroom = false;
+                    if(Aroom == false)
+                        {
+                            sscanf(data[i][3].c_str(), "%d/%d/%d", &dateU[0], &monthU[0], &yearU[0]); 
+                            sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
+                            if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
+                            Aroom = true;
+                        }
                 }
             }
-            if(((room.roomnumber[k]/1000)) == checkAf && Aroom == true)
+            if(((room.roomnumber[k]/1000)) == checkAf && Aroom == true )
             {
                 cout << room.roomnumber[k] << " "; //ให้ปริ้นท์ห้องชนิดstandardที่ว่างอยู่ทั้งหมด
             }
@@ -893,12 +910,7 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
         }
         cout << "\n---------------------------------------------------------------------------------------\n";
     }
-
-
-
 }
-
-
    
 //#########################################################################################################
 
