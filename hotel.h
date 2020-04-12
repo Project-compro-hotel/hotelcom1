@@ -4,6 +4,7 @@
 #include <vector>
 #include <ctime>
 #include <cctype>
+#include <iomanip>
 
 using namespace std;
 
@@ -83,17 +84,26 @@ void Showinfo(const string data[100][10],int loc){
            data[][7] = ชนิดของห้อง
            data[][8] = จำนวนเงินทั้งหมดที่จ่าย
            */
+
     cout<<      "\n+------------------------------------------------------------------------------------------+\n";
     cout<<      "|                                      GUEST INFORMATION                                   |\n";
     cout<<      "+------------------------------------------------------------------------------------------+\n";
 
-    cout<<       "|      Room Type       : "<< data[loc][7]<<  "\t\t\tRoom Number    : "<<data[loc][6]<<"              |";
+    cout<<"|      Room Type       : "<<setw(30) << left  << data[loc][7];
 
-    cout<<     "\n|      Name            : "<<data[loc][0] <<  "\t\t\tBooking Number : "<<data[loc][5]<<"             |";
+    cout<<"Room Number    : "<<setw(19) << left  << data[loc][6]<<"|";
 
-    cout<<     "\n|      Email           : "<<data[loc][1] <<    "\t\tTel            : "<<data[loc][2]<<"        |";
+    cout<<"\n|      Name            : "<<setw(30) << left  << data[loc][0];
 
-    cout<<     "\n|      Check in        : "<<data[loc][3] <<  "\t\t\tCheck out      : "<<data[loc][4]<<"        |";
+    cout<<"Booking Number : "<<setw(19) << left  << data[loc][5]<<"|";
+
+    cout<<"\n|      Email           : "<<setw(30) << left  << data[loc][1];
+
+    cout<<"Tel            : "<<setw(19) << left  << data[loc][2]<<"|";
+
+    cout<<"\n|      Check in        : "<<setw(30) << left  << data[loc][3];
+
+    cout<<"Check out      : "<<setw(19) << left  << data[loc][4]<<"|";
 
     cout<<     "\n|      Cleaning status : ";
     int Clean= rand()%2;
@@ -754,9 +764,10 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     cout <<   "\n\t\t\t|         Check available room         |";
     cout <<   "\n\t\t\t+--------------------------------------+";
 
-    cout << "\nPlease input month snd yearr you would like to check (mm/yyyy): ";
+    cout << "\nPlease input month and year you would like to check (mm/yyyy): ";
     cin >> checkin;
     sscanf(checkin.c_str(), "%d/%d", &month, &year);
+    cout << "\n---------------------------------------------------------------------------------------";
 
     cout <<  "\n\t\t\t             [1] Room type";
     cout <<  "\n\t\t\t             [2] Floor";
