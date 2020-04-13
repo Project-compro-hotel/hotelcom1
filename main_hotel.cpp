@@ -6,6 +6,7 @@ int main() {
     roomdata reservedroom;
     //เพิ่มตั้งค่าห้องของอิ๋ว
     roomsetup(room);
+    setcleaning(room);
     //ตัวเริ่มโปรแกรม
     for(int i=1;i<1000000;i++){
         int x=checkuser();
