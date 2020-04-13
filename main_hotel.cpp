@@ -11,13 +11,19 @@ int main() {
     for(int i=1;i<1000000;i++){
         int x=checkuser();
         if(x==1){ //ถ้าcheckuser == 1 จะเข้าสู่เมนูของลูกค้า
-            if(guestpart()==1){
+            int y=guestpart();
+            if(y==1){
                 //เพิ่มฟังก์ชันหาของอัพ
                 searchforGuest(info,room);
-            }else{
+            }
+            else if(y==2){
                 booking(room,info,reservedroom);
             }
-        }else if(x==2){  //checkuser==0 จะเข้าสู่เมนูของพนักงาน
+            else if (y==3){
+                continue;
+            }
+        }
+        else if(x==2){  //checkuser==0 จะเข้าสู่เมนูของพนักงาน
             for(int i=0;i<4;i++){ //ลูปให้ใส่ username,password ได้ไม่เกิน 3 ครั้ง
                 if(receplogin()==1){
                     recepFunc(room,info);
@@ -28,7 +34,8 @@ int main() {
                         cout << "\n                                    Access deny!"; //ถ้าใส่ username,password ผิดเกิน3ครั้งจะจบโปรแกรม
                         cout << "\n---------------------------------------------------------------------------------------";
                         break;
-                    }else{
+                    }
+                    else{
                         cout << "\n                             Invalid username or password";
                         cout << "\n                             You have " << 3-i << " chance to login";
                         cout << "\n---------------------------------------------------------------------------------------";
@@ -36,6 +43,7 @@ int main() {
                     }
                 }
             }
-        }else return 0;
+        }
+        else return 0;
     }
 }
