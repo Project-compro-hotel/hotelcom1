@@ -226,7 +226,7 @@ int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป�
     }
 }
 
-void plus_income(int &income)
+void update_income(int &income)
 {
     string data[100][10];
     int line;
@@ -235,11 +235,15 @@ void plus_income(int &income)
         if(i==0){
             income = stoi(data[i][8]);
         }else{
-            if(data[i][8]!=data[i-1][8]){
+            if(data[i][5]!=data[i-1][5]){
                 income = income+stoi(data[i][8]);
             }
         }
     }
+    ofstream dest;
+    dest.open("income.txt",ios::app);
+    dest << to_string(income) <<"\n";
+    dest.close();
 }
 
 void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟังก์ชันการจอง
@@ -779,7 +783,7 @@ void change_Booking(roomtype &room){
             for(int j = 0;j<24;j++)
             {
                 if(room.roomnumber[j] == stoi(data[i][6]))
-                room.cleaning[j] = false;
+                    room.cleaning[j] = false;
             }
             para++;
         }
@@ -864,9 +868,9 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
         }
     }
     if(para1==0){
-         cout << "---------------------------------------------------------------------------------------";
-            cout << "\n\t\t\t              - NOT FOUND THIS BOOKING NUMBER-";
-            cout << "\n---------------------------------------------------------------------------------------";
+        cout << "---------------------------------------------------------------------------------------";
+        cout << "\n\t\t\t              - NOT FOUND THIS BOOKING NUMBER-";
+        cout << "\n---------------------------------------------------------------------------------------";
     }else{
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\n\t\t\t\t[1]Cancel your booking    [2] Exit ";
@@ -1079,7 +1083,7 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
     string data[100][10];
     int line;
     getdata(data,line);
-    
+
     cout << "\nPlease select room : ";
     cin >> num_check;
     cout << "---------------------------------------------------------------------------------------";
@@ -1101,8 +1105,17 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
 //#########################################################################################################
 void check_income()
 {
-    int income = 0;
-    plus_income(income);
+    string textline;
+    int income=0;
+    ifstream source;
+    source.open("income.txt");
+    while (getline(source,textline))
+    {
+        if(stoi(textline)>income){
+            income = stoi(textline);
+        }
+    }
+    source.close();
     cout << "\n                          $$$$$  Total income = " << income << " baht  $$$$$";
     cout << "\n---------------------------------------------------------------------------------------";
 }
