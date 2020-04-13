@@ -239,16 +239,8 @@ int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป�
 void update_income()
 {
     string textline;
-    int line,income;
+    int line,income = 0;
     ifstream source;
-    source.open("income.txt");
-    while (getline(source,textline))
-    {
-        if(atoi(textline.c_str())>income){
-            income = atoi(textline.c_str());
-        }
-    }
-    source.close();
     getdata(line);
     for(int i=0;i<line;i++){
             if(data[i][5]!=data[i-1][5]){
@@ -713,9 +705,9 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
             ofstream dest("data.txt",ios::app);
             dest  << textline <<"\n";
             dest.close();
-            update_income();
+            
         }
-
+        update_income();
         cout << "\n----------------------------------------------------------------------------------------";
         cout << "\nChecking room status by using this booking number.";
         cout << "\n\n\t\t\t\t+----------------------------+";
@@ -1129,7 +1121,6 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
 //#########################################################################################################
 void check_income()
 {
-    
     string textline;
     int income=0;
     ifstream source;
