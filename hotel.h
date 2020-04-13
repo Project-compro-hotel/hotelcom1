@@ -124,8 +124,9 @@ void Showinfo(const string data[100][10],int loc,const roomtype room){
           }
         
     }
-    if(room.cleaning[k]==true) cout<<"Cleaned                                                               |\n";
-    else{cout<<"Wait to clean                                                                |\n";}
+    if(room.cleaning[k]==true) cout<<setw(66) << left<<"Cleaned"<<"|\n";
+    else{  cout<< setw(66) << left<<"Wait to clean"<<"|\n";    }
+
     cout<<"+------------------------------------------------------------------------------------------+\n";
 }
 
@@ -183,7 +184,8 @@ int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป�
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout << "  \n\t\t\t|          Receptionist MENU           |";
     cout << "  \n\t\t\t+--------------------------------------+";
-    cout << "\n                             ==> Username : ";
+    cout << "\nPlease log in before  the menu...";
+    cout << "\n\n                             ==> Username : ";
     cin >> username;
     cout <<   "                             ==> Password : ";
     cin >> password;
@@ -762,7 +764,10 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
     for(int i = 0; i < guestdata.size(); i++){
         if(bookingNO==data[i][5]){
             Showinfo(data,i,room);
-        }
+        }else{ cout << "---------------------------------------------------------------------------------------";
+        cout << "\n\t\t\t              - NO DATA -"; 
+        cout << "\n---------------------------------------------------------------------------------------";}
+
     }
 
 }
@@ -991,20 +996,7 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
          data[][7] = ชนิดของห้อง
          data[][8] = จำนวนเงินทั้งหมดที่จ่าย
          */
-    }
-     /*  cout << "\nRoom Booked : ";
-    int roomsame[]={};//ทุกห้องที่จอง จะมีซ้ำกัน
-    for(int i = 0 ; i< guestdata.size(); i++){
-      roomsame[i] = stoi(data[i][6]);
-    }
-   
-    for (int i = 0; i < sizeof(roomsame)/sizeof(roomsame[0]); i++) //ให้แสดงห้องที่ซ้ำ ห้องเดียว
-    {
-     if(roomsame[i]==roomsame[i+1]) {cout << roomsame[i]<<" ";}
-     else {cout << roomsame[i]<<" ";}
-     
-    }
-    */   
+    } 
     cout << "\nPlease select room : ";
     cin >> num_check;
     cout << "---------------------------------------------------------------------------------------";
