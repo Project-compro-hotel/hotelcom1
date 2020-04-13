@@ -10,6 +10,7 @@
 using namespace std;
 
 vector<string> unaviroom;
+string data[100][10];
 
 struct roomtype{ //structure เก็บตัวแปรทุกอย่างเกี่ยวกับห้อง
     string type[3];
@@ -35,7 +36,7 @@ struct guestinfo{ //structure เก็บตัวแปรทุกอย่�
     roomdata *reservedroom;
 };
 
-void getdata(string data[100][10],int &line) {
+void getdata(int &line) {
     string textline;
     line = 0;
     ifstream source;
@@ -66,6 +67,7 @@ void getdata(string data[100][10],int &line) {
      data[][8] = จำนวนเงินทั้งหมดที่จ่าย
      */
 }
+//#########################################################################################################
 
 void roomsetup(roomtype &room){
     int para1=1,para2=1;
@@ -95,12 +97,14 @@ void roomsetup(roomtype &room){
         para2=1;
     }
 }
+//#########################################################################################################
 
 void resetroomstatus(roomtype &room){
     for(int i=0;i<24;i++){
         room.status[i]='A';
     }
 }
+//#########################################################################################################
 
 void setcleaning(roomtype &room)
 {
@@ -109,8 +113,9 @@ void setcleaning(roomtype &room)
         room.cleaning[i] = false;
     }
 }
+//#########################################################################################################
 
-void Showinfo(const string data[100][10],int loc,const roomtype room){
+void Showinfo(int loc,const roomtype room){
     int k = 0;
     /*ข้อมูลถูกเก็บไว้ดังนี้
            data[ลำดับของลูกค้า][]
@@ -158,6 +163,7 @@ void Showinfo(const string data[100][10],int loc,const roomtype room){
     else{cout<< setw(66) << left<<"Wait to clean                                                     |\n";}
     cout<<"+------------------------------------------------------------------------------------------+\n";
 }
+//#########################################################################################################
 
 int checkuser(){ //ฟังก์ชันแรกรับอินพุตเพื่อแยกลูกค้ากับหนักงาน
     int menu;
@@ -181,6 +187,7 @@ int checkuser(){ //ฟังก์ชันแรกรับอินพุต�
     }
     return menu;
 }
+//#########################################################################################################
 
 int guestpart() { //ฟังก์ชันต่อจาก checkuser เป็นพาร์ทของลูกค้า
     char menu;
@@ -207,6 +214,7 @@ int guestpart() { //ฟังก์ชันต่อจาก checkuser เป�
         }
     }
 }
+//#########################################################################################################
 
 int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป็นพาร์ทของพนักงาน
     string username,password;
@@ -225,33 +233,40 @@ int receplogin(){ //ฟังก์ชันต่อจาก checkuser เป�
         return 0;
     }
 }
+//#########################################################################################################
 
-void update_income(int &income)
+void update_income()
 {
-    string data[100][10];
-    int line;
-    getdata(data,line);
-    for(int i=0;i<line;i++){
-        if(i==0){
-            income = stoi(data[i][8]);
-        }else{
-            if(data[i][5]!=data[i-1][5]){
-                income = income+stoi(data[i][8]);
-            }
+    string textline;
+    int line,income;
+    ifstream source;
+    source.open("income.txt");
+    while (getline(source,textline))
+    {
+        if(atoi(textline.c_str())>income){
+            income = atoi(textline.c_str());
         }
+    }
+    source.close();
+    getdata(line);
+    for(int i=0;i<line;i++){
+            if(data[i][5]!=data[i-1][5]){
+                income = income+atoi(data[i][8].c_str());
+            }
     }
     ofstream dest;
     dest.open("income.txt",ios::app);
     dest << to_string(income) <<"\n";
     dest.close();
 }
+//#########################################################################################################
 
 void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟังก์ชันการจอง
     int date[2], month[2], year[2], slroom[24], roomNO, totalprice = 0, bookingNum, Numofday = 0;
     int rsdate[2], rsmonth[2], rsyear[2], rsroomNO, line;
-    string name, email, checkin, checkout, rsroom[24], phonenumber,sltype[24],data[100][10];
+    string name, email, checkin, checkout, rsroom[24], phonenumber,sltype[24];
     char type, confirm;
-    getdata(data,line);
+    getdata(line);
     resetroomstatus(room);
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout << "\n  \t\t\t|         Booking your rooms           |";
@@ -616,7 +631,6 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
                 }
             }
         }
-        cout << "\n" << voucher << "\n";
         if(voucher==vckey){
             cout << "\n---------------------------------------------------------------------------------------";
 
@@ -698,6 +712,7 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
             ofstream dest("data.txt",ios::app);
             dest  << textline <<"\n";
             dest.close();
+            update_income();
         }
 
         cout << "\n----------------------------------------------------------------------------------------";
@@ -721,6 +736,7 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
 
     }
 }
+//#########################################################################################################
 
 void change_Cstatus(roomtype &room)
 {
@@ -740,8 +756,9 @@ void change_Cstatus(roomtype &room)
         }
     }
 }
+//#########################################################################################################
 
-void delete_booking(const string data[100][10],const int line,const int loc[100], const int para) {
+void delete_booking(const int line,const int loc[100], const int para) {
     string textline,s,nl="\n";
     ifstream source;
     source.open("data.txt");
@@ -765,11 +782,11 @@ void delete_booking(const string data[100][10],const int line,const int loc[100]
     dest << s;
     dest.close();
 }
+//#########################################################################################################
 
 void change_Booking(roomtype &room){
     int bookingNO,para=0,line,loc[100];
-    string data[100][10];
-    getdata(data,line);
+    getdata(line);
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout << "  \n\t\t\t|            Delete booking            |";
     cout << "  \n\t\t\t+--------------------------------------+";
@@ -778,11 +795,11 @@ void change_Booking(roomtype &room){
     cin >> bookingNO;
     cout << "---------------------------------------------------------------------------------------";
     for(int i=0;i<line;i++){
-        if(bookingNO==stoi(data[i][5])){
+        if(bookingNO==atoi(data[i][5].c_str())){
             loc[para]=i;
             for(int j = 0;j<24;j++)
             {
-                if(room.roomnumber[j] == stoi(data[i][6]))
+                if(room.roomnumber[j] == atoi(data[i][6].c_str()))
                     room.cleaning[j] = false;
             }
             para++;
@@ -792,20 +809,20 @@ void change_Booking(roomtype &room){
         cout << "\n\n\t\t\t***Sorry, We can't find this room number.***";
         cout << "\n\n---------------------------------------------------------------------------------------";
     }else{
-        delete_booking(data,line,loc,para);
+        delete_booking(line,loc,para);
         cout << "\n\n\t\t\t***Data of booking number : " << bookingNO << " was deleted.***";
         cout << "\n\n---------------------------------------------------------------------------------------";
     }
 
 }
+//#########################################################################################################
 
 void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก์ชันการค้นหาของพนักงาน
     char cmd;
     string name, checkin;
-    string data[100][10];
     int roomNO;
     int line;
-    getdata(data,line);
+    getdata(line);
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout << "\n  \t\t\t|            Manage a room             |";
     cout << "\n  \t\t\t+--------------------------------------+";
@@ -823,7 +840,7 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
         cout << "---------------------------------------------------------------------------------------";
         for (int i = 0; i < line; i++) {
             if (name == data[i][0]) {
-                Showinfo(data,i,room);
+                Showinfo(i,room);
             }
         }
     } else if (cmd == '2') {
@@ -831,8 +848,8 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
         cin >> roomNO;
         cout << "\n---------------------------------------------------------------------------------------";
         for (int i = 0; i < line; i++) {
-            if (roomNO == stoi(data[i][6])) {
-                Showinfo(data,i,room);
+            if (roomNO == atoi(data[i][6].c_str())) {
+                Showinfo(i,room);
             }
         }
     } else if (cmd == '3'){
@@ -841,7 +858,7 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
         cout << "\n---------------------------------------------------------------------------------------";
         for (int i = 0; i < line; i++) {
             if (checkin == data[i][3]) {
-                Showinfo(data,i,room);
+                Showinfo(i,room);
             }
         }
     }
@@ -851,9 +868,8 @@ void searchforRecep(const guestinfo info, const roomtype room) {//ฟังก�
 
 void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก์ชันการค้นหาของลูกค้า
     string bookingNO;
-    string data[100][10];
     int line,cmd,para=0,para1=0,loc[100];
-    getdata(data,line);
+    getdata(line);
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout << "\n  \t\t\t|            Manage a room             |";
     cout << "\n  \t\t\t+--------------------------------------+";
@@ -863,7 +879,7 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
     cin >> bookingNO;
     for(int i = 0; i < line; i++){
         if(bookingNO==data[i][5]){
-            Showinfo(data,i,room);
+            Showinfo(i,room);
             para1++;
         }
     }
@@ -891,7 +907,7 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
                         para++;
                     }
                 }
-                delete_booking(data,line,loc,para);
+                delete_booking(line,loc,para);
                 cout << "\n\n\t\t\t***Your booking is canceled.***";
                 cout << "\n\n---------------------------------------------------------------------------------------";
             }
@@ -910,10 +926,10 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
     char checkA,checkAt;
 
     int checkAf,roomnum[100],date,month,year,dateU[2],monthU[2],yearU[2];
-    string checkin,data[100][10];
+    string checkin;
     bool Aroom = true ;
     int line;
-    getdata(data,line);
+    getdata(line);
     cout << "\n\n\t\t\t+--------------------------------------+";
     cout <<   "\n\t\t\t|         Check available room         |";
     cout <<   "\n\t\t\t+--------------------------------------+";
@@ -974,6 +990,8 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                             sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
                             if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
                                 Aroom = true;
+                            if((month == monthU[0] && year == yearU[0]) || (month == monthU[1] && year == yearU[1] && dateU[1] != 01))
+                                Aroom = false;
                         }
                     }
                 }
@@ -999,6 +1017,8 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                             sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
                             if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
                                 Aroom = true;
+                            if((month == monthU[0] && year == yearU[0]) || (month == monthU[1] && year == yearU[1] && dateU[1] != 01))
+                                Aroom = false;
                         }
                     }
                 }
@@ -1024,6 +1044,8 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                             sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
                             if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
                                 Aroom = true;
+                            if((month == monthU[0] && year == yearU[0]) || (month == monthU[1] && year == yearU[1] && dateU[1] != 01))
+                                Aroom = false;
                         }
                     }
                 }
@@ -1063,6 +1085,8 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
                         sscanf(data[i][4].c_str(), "%d/%d/%d", &dateU[1], &monthU[1], &yearU[1]);
                         if(month != monthU[0] || (month != monthU[1] && dateU[1] != 01) || (month == monthU[0] && year != yearU[0]) || (month == monthU[1] && year != yearU[1]))
                             Aroom = true;
+                        if((month == monthU[0] && year == yearU[0]) || (month == monthU[1] && year == yearU[1] && dateU[1] != 01))
+                            Aroom = false;
                     }
                 }
             }
@@ -1080,9 +1104,8 @@ void check_Aroom(const roomtype room)//ฟังก์ชันเช็คห�
 void check_checkin(const roomtype room,const guestinfo info)//เช็คหาวันที่เข้าพักจากเลขห้อง
 {
     int num_check;
-    string data[100][10];
     int line;
-    getdata(data,line);
+    getdata(line);
 
     cout << "\nPlease select room : ";
     cin >> num_check;
@@ -1090,7 +1113,7 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
 
     for(int i =0;i < line;i++)
     {
-        if(stoi(data[i][6]) == num_check)
+        if(atoi((data[i][6].c_str())) == num_check)
         {
             cout <<"  \n\t\t\t+--------------------------------------+";
             cout <<  "\n\t\t\t|         Checkin   : " << data[i][3]<<"       |";
@@ -1105,14 +1128,15 @@ void check_checkin(const roomtype room,const guestinfo info)//เช็คหา
 //#########################################################################################################
 void check_income()
 {
+    
     string textline;
     int income=0;
     ifstream source;
     source.open("income.txt");
     while (getline(source,textline))
     {
-        if(stoi(textline)>income){
-            income = stoi(textline);
+        if(atoi(textline.c_str())>income){
+            income = atoi(textline.c_str());
         }
     }
     source.close();
@@ -1121,11 +1145,35 @@ void check_income()
 }
 //#########################################################################################################
 
+void reset_info()
+{
+    int passW = 1111,input;
+    cout << "\nPlease input password to delete information : ";
+    cin >> input;
+    if(input == passW)
+    {
+        string s;
+        ofstream resource;
+        resource.open("data.txt");
+        resource << s;
+        resource.close();
+        ofstream dest;
+        dest.open("income.txt");
+        dest << s;
+        dest.close();
+        memset(data, 0,sizeof(data));
+        cout << "---------------------------------Information was deleted.------------------------------";
+    }
+    cout << "\n---------------------------------------------------------------------------------------";
+    
+}
+//#########################################################################################################
+
 void recepFunc(roomtype &room,const guestinfo info)
 {
     char menuR;
 
-    while(menuR != '7')
+    while(menuR != '8')
     {
         cout << "\n\n\t\t\t+--------------------------------------+";
         cout << "  \n\t\t\t|          Receptionist MENU           |";
@@ -1137,7 +1185,8 @@ void recepFunc(roomtype &room,const guestinfo info)
         cout << "\n                     [4] Search information";
         cout << "\n                     [5] Change cleaning status";
         cout << "\n                     [6] Delete booking";
-        cout << "\n                     [7] Exit...";
+        cout << "\n                     [7] Delete all information";
+        cout << "\n                     [8] Exit...";
 
         cout << "\n---------------------------------------------------------------------------------------";
         cout << "\nPlease select : ";
@@ -1145,7 +1194,7 @@ void recepFunc(roomtype &room,const guestinfo info)
         cout << "---------------------------------------------------------------------------------------";
         menuR=toupper(menuR);
 
-        while(menuR != '1' && menuR != '2' && menuR != '3' && menuR != '4' && menuR != '5' && menuR != '6' && menuR != '7')
+        while(menuR != '1' && menuR != '2' && menuR != '3' && menuR != '4' && menuR != '5' && menuR != '6' && menuR != '7' && menuR != '8')
         {
             cout << "\nPlease select again!! : ";
             cin >> menuR;
@@ -1170,6 +1219,9 @@ void recepFunc(roomtype &room,const guestinfo info)
         if(menuR == '6')
             change_Booking(room);
 
-    }
+        if(menuR == '7')
+            reset_info();
 
+    }
 }
+//#########################################################################################################
