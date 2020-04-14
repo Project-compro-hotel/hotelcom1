@@ -252,6 +252,26 @@ void update_income()
     dest << to_string(income) <<"\n";
     dest.close();
 }
+
+void delete_income(const int loc[100])
+{
+    string textline;
+    int line,income = 0;
+    ifstream source;
+    source.open("income.txt");
+    while (getline(source,textline))
+    {
+        if(income<atoi(textline.c_str())){
+            income = atoi(textline.c_str());
+        }
+    }
+    
+    income = income-atoi(data[loc[0]][8].c_str());
+    ofstream dest;
+    dest.open("income.txt");
+    dest << to_string(income) <<"\n";
+    dest.close();
+}
 //#########################################################################################################
 
 void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟังก์ชันการจอง
@@ -900,6 +920,7 @@ void searchforGuest(const guestinfo info, const roomtype room){ //ฟังก�
                         para++;
                     }
                 }
+                delete_income(loc);
                 delete_booking(line,loc,para);
                 cout << "\n\n\t\t\t***Your booking is canceled.***";
                 cout << "\n\n---------------------------------------------------------------------------------------";
@@ -1176,7 +1197,7 @@ void recepFunc(roomtype &room,const guestinfo info)
         cout << "\n                     [3] Check total income";
         cout << "\n                     [4] Search information";
         cout << "\n                     [5] Change cleaning status";
-        cout << "\n                     [6] Delete booking";
+        cout << "\n                     [6] Clear booking";
         cout << "\n                     [7] Delete all information";
         cout << "\n                     [8] Exit...";
 
