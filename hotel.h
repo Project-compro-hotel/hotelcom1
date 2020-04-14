@@ -207,12 +207,13 @@ int guestpart() { //ฟังก์ชันต่อจาก checkuser เป�
     else if (menu == '2') return 2;
     else if (menu == '3') return 3;
     else {
-        for (int i = 0; i < 20; i++) {
+        for (int i=0; i < 20; i++) {
             cout << "\nPlease select again : ";
             cin >> menu;
             cout << "---------------------------------------------------------------------------------------";
-            continue;
+            continue;    
         }
+        return 3;
     }
 }
 //#########################################################################################################
@@ -295,7 +296,7 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
         sscanf(checkout.c_str(), "%d/%d/%d", &date[1], &month[1], &year[1]);
         cout << "---------------------------------------------------------------------------------------";
         if (year[0] == year[1]) {
-            if (date[0] < date[1] && month[1] == month[0] || month[1] > month[0]) break;
+            if ((date[0] < date[1] && month[1] == month[0] ) || ( month[1] > month[0])) break;
         } else if (year[0] < year[1]) {
             break;
         }
@@ -400,8 +401,7 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
         } else { //กรณีอื่นๆ
             if(year[0]==year[1]&&rsyear[0]==rsyear[1]&&year[0]==rsyear[1]){//กรณีปีเท่ากันทั้งหมด
                 if (month[0] == month[1] && rsmonth[0] == rsmonth[1] && month[0] == rsmonth[0] ) { // ถ้าเดือนเดียวกันทั้งหมด
-                    if (rsdate[0] <= date[0] && date[0] < rsdate[1] ||
-                        rsdate[0] < date[1] && date[1] <= rsdate[1]) { //กรณีวันที่เช็คอินหรือเช็คเอาท์อยู่ระหว่างข้อมูล
+                    if ((rsdate[0] <= date[0] && date[0] < rsdate[1]) || (rsdate[0] < date[1] && date[1] <= rsdate[1])) { //กรณีวันที่เช็คอินหรือเช็คเอาท์อยู่ระหว่างข้อมูล
                         room.status[temp] = 'U';
                     } else if (date[0] < rsdate[0] && date[1] > rsdate[1]) { //กรณีวันที่เช็คอินและเช็คเอาท์อยู่ครอบข้อมูล
                         room.status[temp] = 'U';
@@ -533,7 +533,8 @@ void booking(roomtype &room,guestinfo &info,roomdata &reservedroom) { //ฟั�
         }
         cout << "\nPlease select a room : "; //เลือกห้องที่จะจอง
         cin >> slroom[i];
-        for(int j=0;j<i;j++){ //แก้errorแล้วจ้า
+        for(int j=0;j<=i;j++){ //แก้errorแล้วจ้า
+            if(j==i&&j!=0) break;
             if (slroom[i - (j+1)] == slroom[i]) { //ถ้าเลือกห้องซ้ำให้เปลี่ยนเลขห้องใหม่
                 cout << "Please select again : ";
                 cin >> slroom[i];
